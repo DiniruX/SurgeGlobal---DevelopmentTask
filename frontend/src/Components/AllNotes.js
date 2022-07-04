@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const AllNotes = () => {
 
@@ -23,8 +24,13 @@ const AllNotes = () => {
         let data = await axios
             .delete(`http://localhost:8000/notes/${id}`)
             .then(() => {
-                alert('Delete Success...');
-                navigate('/allnotes');
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Note Deleted!',
+                    text: 'Your note has been successfully deleted from the system...',
+                })
+                //window.location.reload(false);
             })
     }
 

@@ -28,8 +28,8 @@ const Navbar = () => {
                             <div className="navbar-nav">
 
                                 {/*  Student Pages */}
-                                <a style={{ display: accountType == "Student" ? "flex" : "none", textDecoration: "none" }} className="sidebarListItem" href="/addnote" aria-current="page">New Note</a>
-                                <a style={{ display: accountType == "Student" ? "flex" : "none", textDecoration: "none" }} className="sidebarListItem" href="/allnotes" aria-current="page">All Notes</a>
+                                <a style={{ display: accountType == "Student" ? "flex" : "none", textDecoration: "none", color:'white', marginRight:'20px', marginLeft:'20px' }} className="sidebarListItem" href="/addnote" aria-current="page">New Note</a>
+                                <a style={{ display: accountType == "Student" ? "flex" : "none", textDecoration: "none", color:'white', marginRight:'20px', marginLeft:'20px' }} className="sidebarListItem" href="/allnotes" aria-current="page">All Notes</a>
                                 
                             </div>
                         </div>

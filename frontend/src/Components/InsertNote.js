@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const InsertNote = () => {
+
+    const navigate = useNavigate();
+    let userEmail = localStorage.getItem('Email');
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -24,14 +29,33 @@ const InsertNote = () => {
         const dataSet = {
             title: title,
             description: description,
+            email: userEmail
         }
 
         console.log("Sending Note Data...", dataSet);
         let data = await axios.post('http://localhost:8000/notes', {
             title: title,
             description: description,
+            email: userEmail
         });
         console.log("Saved Data: ", data);
+        if (data.status !== 200) {
+            Swal.fire({
+                icon: 'error',
+                title: ' Inserte Failed!',
+                text: 'Error While Inserting...',
+            })
+        }
+        else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Note Inserted!',
+                text: 'Your note has been successfully inserted into the system...',
+            })
+            navigate('/allnotes');
+
+        }
+
     }
 
 

@@ -113,7 +113,7 @@ const RegisterUser = () => {
             dateOfBirth: dateOfBirth,
             mobile: mobile,
             accountType: accountType,
-            password:password,
+            password:toString(password),
             status:'0'
         })
         .then((res) => {
@@ -191,7 +191,7 @@ const RegisterUser = () => {
                     </div>
 
                     <div className='form-group'>
-                    <label>Status</label>
+                    {/* <label>Status</label> */}
                         <input type='hidden' name='' onChange={(e) => handleStatusChange(e)} value={status} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' readOnly='true' />
                     </div>
 

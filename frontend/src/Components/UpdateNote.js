@@ -54,13 +54,25 @@ const UpdateNote = () => {
             .put(`http://localhost:8000/notes/${id}`, {
                 title: title,
                 description: description,
-            })
-            .then(() => {
-                alert('Update Success...');
+            });
+            console.log("Updated Data: ", data);
+            if (data.status !== 200) {
+                Swal.fire({
+                    icon: 'error',
+                    title: ' Inserte Failed!',
+                    text: 'Error While Inserting...',
+                })
+            }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Note Inserted!',
+                    text: 'Your note has been successfully inserted into the system...',
+                })
                 navigate('/allnotes');
-            })
-        console.log("Updated Data: ", data);
+        
     }
+}
 
 
     return (
@@ -70,12 +82,12 @@ const UpdateNote = () => {
                 <form>
                     <div className='form-group'>
                         <label>Title</label><br />
-                        <input type='text' name="title" value={title.title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='text' name="title" value={res.data.title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
                     </div>
 
                     <div className='form-group'>
                         <label>Description</label><br />
-                        <textarea rows='5' name="description" value={description.description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <textarea rows='5' name="description" value={res.data.description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
                     </div>
 
                     <button type='submit' onClick={(e) => UpdateNote(e)} style={{ marginTop: '20px' }} className='btn btn-success'>Update Note</button>

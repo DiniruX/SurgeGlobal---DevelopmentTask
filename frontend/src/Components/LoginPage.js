@@ -30,21 +30,21 @@ const LoginPage = () => {
             .post('http://localhost:8000/users/signin', formData);
         console.log("data", data?.data);
 
-        if (formData.email === data?.data?.email) {
-            if (formData.password === data?.data?.password) {
+        if (formData.email) {
+            if (formData.password) {
                 try {
                     localStorage.setItem("Token", data?.data?.token);
-                    localStorage.setItem("AccountType", data?.data?.accountType);
-                    localStorage.setItem("Email", data?.data?.email);
-                    localStorage.setItem("Status", data?.data?.status);
-                    localStorage.setItem("Id", data?.data?.id);
+                    localStorage.setItem("AccountType", data?.data?.user?.accountType);
+                    localStorage.setItem("Email", data?.data?.user?.email);
+                    localStorage.setItem("Status", data?.data?.user?.status);
+                    localStorage.setItem("Id", data?.data?.user?._id);
 
-                    alert('Login Success...');
-                    if (data?.data?.status == false) {
-                        navigate(`/updatepword/${data?.data?.id}`);
+                    //alert('Login Success...');
+                    if (data?.data?.user?.status == false) {
+                        navigate(`/updatepword/${data?.data?.user?._id}`);
                         setIsLoading(false);
                     }
-                    else if (data?.data?.accountType == "Student") {
+                    else if (data?.data?.user?.accountType === "Student") {
                         navigate(`/allnotes`);
                         setIsLoading(false);
                     }
