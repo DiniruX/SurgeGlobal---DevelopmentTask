@@ -47,14 +47,30 @@ const getNoteById = async (req, res) => {
 
 }
 
+const getNoteByEmail = async (req, res) => {
+    
+    const email = req.query.email
+    const query = {"email":email}
+    try {
+
+        const notes = await Note.find(query);
+        res.status(200).json(notes);
+      } 
+      catch (error) {
+
+        console.log(error);
+        res.status(404).json({ message: error.message });
+      }
+}
+
 const updateNote = async (req, res) => {
 
     const { id } = req.params;
-    const { title, description } = req.body;
+    const { title, description, email } = req.body;
 
     try {
 
-        const updatedNote = ({ title, description, _id: id });
+        const updatedNote = ({ title, description, email, _id: id });
         await Note.findByIdAndUpdate(id, updatedNote, { new: true });
         res.json(updatedNote);
     }
@@ -72,7 +88,7 @@ const deleteNote = async (req, res) => {
     try {
 
         await Note.findByIdAndRemove(id);
-        res.status(200).json({message: "Note deleted successfully..."});
+        res.status(200).json({ message: "Note deleted successfully..." });
     }
 
     catch (err) {
@@ -81,4 +97,4 @@ const deleteNote = async (req, res) => {
     }
 }
 
-module.exports = { createNote, getNotes, getNoteById, updateNote, deleteNote }
+module.exports = { createNote, getNotes, getNoteById, updateNote, deleteNote, getNoteByEmail }

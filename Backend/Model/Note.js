@@ -12,6 +12,11 @@ const Notes = new mongoose.Schema({
         required: true
     },
 
+    email: {
+        type: String,
+        required: true
+    },
+
 });
 
 module.exports = mongoose.model("Notes", Notes);
