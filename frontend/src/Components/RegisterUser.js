@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from './LoadingSpinner/LoadingSpinner'
+import emailjs from '@emailjs/browser';
 
 const RegisterUser = () => {
 
     const navigate = useNavigate();
+    const form = useRef();
 
     const [userId, setUserId] = useState("");
     const [firstName, setFname] = useState("");
@@ -15,6 +18,8 @@ const RegisterUser = () => {
     const [accountType, setAccountType] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const rand = (min, max) => {
         return Math.floor(Math.random() * max - min + 1) + min;
@@ -83,6 +88,7 @@ const RegisterUser = () => {
     }
 
     const addNewUser = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
 
         const userData = {
@@ -113,21 +119,42 @@ const RegisterUser = () => {
         .then((res) => {
             console.log("Saved User: ", res.data);
             alert('Registration Success...');
+            setIsLoading(false);
+            sendEmail(e);
             navigate('/');
         })
         .catch((err) => {
+            setIsLoading(false);
             console.log(err);
         })
         
     }
 
+    const sendEmail = (e) => {
+        e.preventDefault();
+        emailjs.sendForm('service_y4h1h0d', 'template_e6tenye', form.current, 'user_4Ty61vRi47OewtmEVjcGx')
+          .then((result) => {
+              console.log(result.text);
+              alert("Email Has Been Sent...")
+          }, (error) => {
+              console.log(error.text);
+          });
+      };
+
+    const renderUser = (
+        <div style={{ marginTop: '30px', marginLeft: '35%' }}>
+
+        </div>
+    );
+
 
     return (
         <div>
             <h1>Register your account here...</h1>
-
+            {isLoading ? <LoadingSpinner /> : renderUser}
             <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
-                <form>
+                <form ref={form}>
+
                     <div className='form-group'>
                         <label>ID</label><br />
                         <input type='text' name='' onChange={() => handleIds()} value={userId} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
@@ -135,7 +162,7 @@ const RegisterUser = () => {
 
                     <div className='form-group'>
                         <label>First Name</label><br />
-                        <input type='text' name='' onChange={(e) => handleFnameChange(e)} value={firstName} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='user_first_name' onChange={(e) => handleFnameChange(e)} value={firstName} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
@@ -145,7 +172,7 @@ const RegisterUser = () => {
 
                     <div className='form-group'>
                         <label>Email</label><br />
-                        <input type='text' name='' onChange={(e) => handleEmailChange(e)} value={email} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='user_email' onChange={(e) => handleEmailChange(e)} value={email} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
@@ -160,7 +187,7 @@ const RegisterUser = () => {
 
                     <div className='form-group'>
                     <label>Password</label>
-                        <input type='password' name='' onChange={() => handlePws()} value={password} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='password' name='user_password' onChange={() => handlePws()} value={password} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
@@ -184,7 +211,7 @@ const RegisterUser = () => {
                         </label>
                     </div>
 
-                    <button type='submit' onClick={(e) => addNewUser(e)} style={{ marginTop: '20px' }} className='btn btn-primary'>Register</button>
+                    <button type='submit' onClick={(e) => addNewUser(e)} style={{ marginTop: '20px' }} className='btn btn-primary' disabled={isLoading}>Register</button>
                 </form>
                 <div>
                     Already having an account? <a href='/'>Login here</a>

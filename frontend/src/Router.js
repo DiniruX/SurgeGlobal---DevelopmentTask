@@ -18,7 +18,7 @@ export default function Router() {
                 <Routes>
                     <Route exact path="/" element={<LoginPage />} />
                     <Route exact path="/register" element={<RegisterUser />} />
-                    <Route exact path="/allusers" element={<AllUsers />} />
+                    <Route exact path="/allusers/:id" element={<AllUsers />} />
                     <Route exact path="/allnotes" element={<AllNotes />} />
                     <Route exact path="/updatepword/:id" element={<UpdatePassword />} />
                     <Route exact path="/addnote" element={<InsertNote />} />

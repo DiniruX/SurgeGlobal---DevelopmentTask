@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
+import Swal from 'sweetalert2';
 
 const LoginPage = () => {
 
@@ -10,6 +12,7 @@ const LoginPage = () => {
         email: "",
         password: "",
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const { email, password } = formData;
 
@@ -20,6 +23,7 @@ const LoginPage = () => {
 
     const onSubmit = async (e) => {
 
+        setIsLoading(true);
         e.preventDefault();
         console.log("Inserted Data: ", formData)
         let data = await axios
@@ -38,34 +42,58 @@ const LoginPage = () => {
                     alert('Login Success...');
                     if (data?.data?.status == false) {
                         navigate(`/updatepword/${data?.data?.id}`);
+                        setIsLoading(false);
                     }
-                    else if(data?.data?.status == "Student"){
-                        navigate('/allnotes');
+                    else if (data?.data?.accountType == "Student") {
+                        navigate(`/allnotes`);
+                        setIsLoading(false);
                     }
-                    else{
+                    else {
                         navigate('/allusers');
+                        setIsLoading(false);
                     }
                 }
                 catch (err) {
                     console.log(err);
-                    alert("Error While Logging!!!", err);
+                    //alert("Error While Logging!!!", err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed!',
+                        text: 'Oops... Error While Logging!!!',
+                    })
                 }
             }
             else {
-                alert("Invalid Password!!!")
+                setIsLoading(false);
+                //alert("Invalid Password!!!")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed!',
+                    text: 'Oops... Invalid Password!!!',
+                })
             }
         }
         else {
-            alert("Invalid Email Address!!!")
+            setIsLoading(false);
+            //alert("Invalid Email Address!!!")
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed!',
+                text: 'Oops... Invalid Email Address!!!',
+            })
         }
-
-
     };
+
+    const renderUser = (
+        <div style={{ marginTop: '30px', marginLeft: '35%' }}>
+
+        </div>
+    );
 
     return (
         <div>
             <h1>Log into your account here...</h1>
-
+            {isLoading ? <LoadingSpinner /> : renderUser}
             <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
                 <form>
                     <div className='form-group'>
@@ -78,13 +106,12 @@ const LoginPage = () => {
                         <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
                     </div>
 
-                    <button type='submit' onClick={(e) => onSubmit(e)} style={{ marginTop: '20px' }} className='btn btn-success'>Login</button>
+                    <button type='submit' onClick={(e) => onSubmit(e)} style={{ marginTop: '20px' }} className='btn btn-success' disabled={isLoading}>Login</button>
                 </form>
-                <div>
-                    Don't you have an account? <a href='/register'>Register here</a>
-                </div>
             </div>
-
+            <div style={{ marginTop: '30px', marginLeft: '35%' }}>
+                Don't you have an account? <a href='/register'>Register here</a>
+            </div>
         </div>
     )
 }

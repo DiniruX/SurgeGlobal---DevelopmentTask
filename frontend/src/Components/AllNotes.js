@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 const AllNotes = () => {
 
+    let userEmail = localStorage.getItem('Email');
+
     const navigate = useNavigate();
 
     const [notesList, setNotesList] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/notes')
+        axios.get(`http://localhost:8000/notes?email=${userEmail}`)
             .then((res) => {
                 console.log(res.data);
                 setNotesList(res.data);
@@ -29,30 +31,19 @@ const AllNotes = () => {
     return (
         <div>
             <h1>All Notes</h1>
-            <div className='container' style={{ marginTop: '30px' }}>
-                <table className='table table-hover table-light'>
-                    <thead className='thead-dark'>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {notesList.map((val, index) => (
-                            <tr key={index}>
-                                <th>{index + 1}</th>
-                                <td>{val.title}</td>
-                                <td>{val.description}</td>
-                                <td>
-                                    <a className='btn btn-warning' href={`/updatenote/${val?._id}`}>Update Note</a>&nbsp;
-                                    <a className='btn btn-danger' onClick={(e) => deleteNote(val?._id)} >Delete Note</a>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className='container' >
+                <section class="cards" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: '30px' }}>
+                    {notesList.map((val, index) => (
+                        <article class="card" style={{ flex: '0 1 24%', marginBottom: '20px', backgroundColor:'#ffa64d' }}>
+                            <h4>{val.title}</h4>
+                            <p>{val.description}</p>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a className='btn btn-primary' href={`/updatenote/${val?._id}`}>Update Note</a>
+                                <a className='btn btn-danger' onClick={(e) => deleteNote(val?._id)} >Delete Note</a>
+                            </div>
+                        </article>
+                    ))}
+                </section>
             </div>
         </div>
     )

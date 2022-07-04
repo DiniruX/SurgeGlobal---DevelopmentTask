@@ -12,6 +12,8 @@ const Navbar = () => {
         localStorage.removeItem("AccountType");
         localStorage.removeItem("Email");
         localStorage.removeItem("Status");
+        localStorage.removeItem("Id");
+        alert('Logged Out...');
         navigate("/");
     }
     return (
