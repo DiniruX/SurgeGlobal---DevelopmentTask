@@ -8,17 +8,19 @@ import AllNotes from "./Components/AllNotes";
 import UpdatePassword from "./Components/UpdatePassword";
 import InsertNote from "./Components/InsertNote";
 import UpdateNote from "./Components/UpdateNote";
+import Navbar from "./Components/Navbar";
 
 export default function Router() {
     return (
         <div>
             <Routers>
+                <Navbar />
                 <Routes>
                     <Route exact path="/" element={<LoginPage />} />
                     <Route exact path="/register" element={<RegisterUser />} />
                     <Route exact path="/allusers" element={<AllUsers />} />
                     <Route exact path="/allnotes" element={<AllNotes />} />
-                    <Route exact path="/updatepw" element={<UpdatePassword />} />
+                    <Route exact path="/updatepword/:id" element={<UpdatePassword />} />
                     <Route exact path="/addnote" element={<InsertNote />} />
                     <Route exact path="/updatenote/:id" element={<UpdateNote />} />
                 </Routes>
