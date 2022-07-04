@@ -3,48 +3,39 @@ const mongoose = require('mongoose');
 const IUser = new mongoose.Schema({
 
     userId: {
-        type: Number,
-        required: true
+        type: Number
     },
 
     firstName: {
-        type: String,
-        required: true
+        type: String
     },
 
     lastName: {
-        type: String,
-        required: true
+        type: String
     },
 
     email: {
-        type: String,
-        required: true
+        type: String
     },
 
     dateOfBirth: {
-        type: Date,
-        required: true
+        type: Date
     },
 
     mobile: {
-        type: Number,
-        required: true
+        type: Number
     },
 
     status: {
-        type: Boolean,
-        required: true
+        type: Boolean
     },
 
     password: {
-        type: String,
-        required: true
+        type: String
     },
 
     accountType: {
-        type: String,
-        required: true
+        type: String
     },
 });
 

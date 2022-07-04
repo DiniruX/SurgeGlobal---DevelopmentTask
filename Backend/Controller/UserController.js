@@ -39,6 +39,34 @@ const createUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    try {
+        // See if user exists
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ errors: [{ msg: "Invalid Credentials..." }] });
+        }
+
+        //Return jsonwebtoken
+        const payload = {
+            user: {
+                id: user.id,
+            },
+        };
+
+        jwt.sign(payload, jwtSecret, { expiresIn: 2 }, (err, token) => {
+            if (err) throw err;
+            res.json({ token, accountType: user.accountType, email: user.email, status: user.status, id:user.id, password:user.password });
+        });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
 const getUsers = async (req, res) => {
 
     try {
@@ -84,4 +112,4 @@ const updateUser = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getUsers, getUserById, updateUser }
+module.exports = { createUser, getUsers, getUserById, updateUser, loginUser }
