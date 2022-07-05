@@ -11,18 +11,14 @@ const UpdateNote = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    const [note, setNote] = useState({
-        title: '',
-        description: '',
-    });
-
     useEffect(() => {
 
         function getNote() {
             axios
                 .get(`http://localhost:8000/notes/${id}`)
                 .then((res) => {
-                    setNote(res.data);
+                    setTitle(res.data.title);
+                    setDescription(res.data.description);
                     console.log("Note Details: ", res.data);
                 })
         }
@@ -44,7 +40,11 @@ const UpdateNote = () => {
     const UpdateNote = async (e) => {
         e.preventDefault();
 
-        const dataSet = {
+        if (title.length <= 2) {
+            alert("Enter a valid title. Title too short...")
+        }
+        else{
+            const dataSet = {
             title: title,
             description: description,
         }
@@ -70,6 +70,9 @@ const UpdateNote = () => {
                     text: 'Your note has been successfully inserted into the system...',
                 })
                 navigate('/allnotes');
+        }
+
+        
         
     }
 }
@@ -79,18 +82,18 @@ const UpdateNote = () => {
         <div>
             <h1>Update Notes here...</h1>
             <div className='container' style={{ marginTop: '30px', marginLeft: '760px' }}>
-                <form>
+                <form onSubmit={(e) => UpdateNote(e)}>
                     <div className='form-group'>
                         <label>Title</label><br />
-                        <input type='text' name="title" value={res.data.title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='text' name="title" value={title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Description</label><br />
-                        <textarea rows='5' name="description" value={res.data.description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <textarea rows='5' name="description" value={description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
-                    <button type='submit' onClick={(e) => UpdateNote(e)} style={{ marginTop: '20px' }} className='btn btn-success'>Update Note</button>
+                    <button type='submit' style={{ marginTop: '20px' }} className='btn btn-success'>Update Note</button>
                 </form>
             </div>
         </div>

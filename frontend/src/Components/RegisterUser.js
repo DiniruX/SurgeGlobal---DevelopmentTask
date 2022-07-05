@@ -89,68 +89,97 @@ const RegisterUser = () => {
     }
 
     const addNewUser = async (e) => {
-        setIsLoading(true);
         e.preventDefault();
 
-        const userData = {
-            userId: userId,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            dateOfBirth: dateOfBirth,
-            mobile: mobile,
-            accountType: accountType,
-            password:password,
-            status:'0'
+        if (firstName.length <= 2) {
+            alert("The name should at least be 3 letters in the first name...")
+        }
+        if (lastName.length <= 2) {
+            alert("The name should at least be 3 letters in the last name...")
+        }
+    
+        if (email.length <= 2) {
+            alert("Email must contain @ and atleast 3 letter before for the prefix...")
+        }
+    
+        if ((mobile.length < 10) || (mobile.length > 10)) {
+            alert("Enter a valid mobile number...")
+        }
+    
+        if (dateOfBirth.length <= "01/01/2019") {
+            alert("You cannot enrol to the system...")
+        }
+    
+        if (accountType.length <= 2) {
+            alert("Account type should be Student or Admin...")
+        }
+        else {
+            setIsLoading(true);
+            const userData = {
+                userId: userId,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                dateOfBirth: dateOfBirth,
+                mobile: mobile,
+                accountType: accountType,
+                password: password,
+                status: '0'
+            }
+
+            console.log("Sending User Data...", userData);
+
+            let data = await axios
+                .post('http://localhost:8000/users/', {
+                    userId: userId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    dateOfBirth: dateOfBirth,
+                    mobile: mobile,
+                    accountType: accountType,
+                    password: password,
+                    status: '0'
+                })
+                .then((res) => {
+                    console.log("Saved User: ", res.data);
+                    //alert('Registration Success...');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'User Registered!',
+                        text: 'Your data has been successfully inserted. please check your email...',
+                    })
+                    setIsLoading(false);
+                    sendEmail(e);
+                    navigate('/');
+                })
+                .catch((err) => {
+                    // Swal.fire({
+                    //     icon: 'error',
+                    //     title: ' Insert Failed!',
+                    //     text: (err.response.data),
+                    // })
+                    setIsLoading(false);
+                    console.log(err);
+                })
         }
 
-        console.log("Sending User Data...", userData);
-        let data = await axios
-        .post('http://localhost:8000/users/', {
-            userId: userId,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            dateOfBirth: dateOfBirth,
-            mobile: mobile,
-            accountType: accountType,
-            password:password,
-            status:'0'
-        })
-        .then((res) => {
-            console.log("Saved User: ", res.data);
-            //alert('Registration Success...');
-            Swal.fire({
-                icon: 'success',
-                title: 'User Registered!',
-                text: 'Your data has been successfully inserted. please check your email...',
-            })
-            setIsLoading(false);
-            sendEmail(e);
-            navigate('/');
-        })
-        .catch((err) => {
-            Swal.fire({
-                icon: 'error',
-                title: ' Insert Failed!',
-                text: 'Error While Registering...',
-            })
-            setIsLoading(false);
-            console.log(err);
-        })
-        
+
+
+
+
     }
 
     const sendEmail = (e) => {
         e.preventDefault();
         emailjs.sendForm('service_y4h1h0d', 'template_e6tenye', form.current, 'user_4Ty61vRi47OewtmEVjcGx')
-          .then((result) => {
-              console.log(result.text);
-              //alert("Email Has Been Sent...")
-          }, (error) => {
-              console.log(error.text);
-          });
-      };
+            .then((result) => {
+                console.log(result.text);
+                //alert("Email Has Been Sent...")
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
 
     const renderUser = (
         <div style={{ marginTop: '30px', marginLeft: '35%' }}>
@@ -196,12 +225,12 @@ const RegisterUser = () => {
                     </div>
 
                     <div className='form-group'>
-                    <label>Password <b>(Press Any Key...)</b></label>
+                        <label>Password <b>(Press Any Key...)</b></label>
                         <input type='password' name='user_password' onChange={() => handlePws()} value={password} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
-                    {/* <label>Status</label> */}
+                        {/* <label>Status</label> */}
                         <input type='hidden' name='' onChange={(e) => handleStatusChange(e)} value={status} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' readOnly='true' />
                     </div>
 

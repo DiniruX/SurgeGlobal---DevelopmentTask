@@ -25,10 +25,13 @@ const LoginPage = () => {
 
         setIsLoading(true);
         e.preventDefault();
+
         console.log("Inserted Data: ", formData)
         let data = await axios
-            .post('http://localhost:8000/users/signin', formData);
-        console.log("data", data?.data);
+            .post('http://localhost:8000/users/signin', formData)
+        console.log("data", data?.data)
+
+
 
         if (formData.email) {
             if (formData.password) {
@@ -95,18 +98,18 @@ const LoginPage = () => {
             <h1>Log into your account here...</h1>
             {isLoading ? <LoadingSpinner /> : renderUser}
             <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
-                <form>
+                <form onSubmit={(e) => onSubmit(e)}>
                     <div className='form-group'>
                         <label>Email</label><br />
-                        <input type='email' name='email' value={email} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='email' name='email' value={email} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Password</label><br />
-                        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
-                    <button type='submit' onClick={(e) => onSubmit(e)} style={{ marginTop: '20px' }} className='btn btn-success' disabled={isLoading}>Login</button>
+                    <button type='submit'  style={{ marginTop: '20px' }} className='btn btn-success' disabled={isLoading}>Login</button>
                 </form>
             </div>
             <div style={{ marginTop: '30px', marginLeft: '35%' }}>

@@ -47,7 +47,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleLogOut} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: accountType == "Student" || accountType == "Admin" ? "flex" : "none" }}>
+                    <button onClick={handleLogOut} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: accountType ? "flex" : "none" }}>
                         {"Logout"}
                     </button>
 

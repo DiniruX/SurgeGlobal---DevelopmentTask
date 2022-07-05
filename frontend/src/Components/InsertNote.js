@@ -26,35 +26,42 @@ const InsertNote = () => {
     const addNote = async (e) => {
         e.preventDefault();
 
-        const dataSet = {
-            title: title,
-            description: description,
-            email: userEmail
-        }
-
-        console.log("Sending Note Data...", dataSet);
-        let data = await axios.post('http://localhost:8000/notes', {
-            title: title,
-            description: description,
-            email: userEmail
-        });
-        console.log("Saved Data: ", data);
-        if (data.status !== 200) {
-            Swal.fire({
-                icon: 'error',
-                title: ' Insert Failed!',
-                text: 'Error While Inserting...',
-            })
+        if (title.length <= 2) {
+            alert("Enter a valid title. Title too short...")
         }
         else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Note Inserted!',
-                text: 'Your note has been successfully inserted into the system...',
-            })
-            navigate('/allnotes');
+            const dataSet = {
+                title: title,
+                description: description,
+                email: userEmail
+            }
 
+            console.log("Sending Note Data...", dataSet);
+            let data = await axios.post('http://localhost:8000/notes', {
+                title: title,
+                description: description,
+                email: userEmail
+            });
+            console.log("Saved Data: ", data);
+            if (data.status !== 200) {
+                Swal.fire({
+                    icon: 'error',
+                    title: ' Insert Failed!',
+                    text: 'Error While Inserting...',
+                })
+            }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Note Inserted!',
+                    text: 'Your note has been successfully inserted into the system...',
+                })
+                navigate('/allnotes');
+
+            }
         }
+
+
 
     }
 
@@ -64,18 +71,18 @@ const InsertNote = () => {
         <div>
             <h1>Insert Notes here...</h1>
             <div className='container' style={{ marginTop: '30px', marginLeft: '760px' }}>
-                <form>
+                <form onSubmit={(e) => addNote(e)}>
                     <div className='form-group'>
                         <label>Title</label><br />
-                        <input type='text' value={title} className='form-control' style={{ width: '400px', marginBottom: '20px' }} onChange={(e) => handleTitleChange(e)} />
+                        <input type='text' value={title} className='form-control' style={{ width: '400px', marginBottom: '20px' }} onChange={(e) => handleTitleChange(e)} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Description</label><br />
-                        <textarea rows='5' name={description} className='form-control' style={{ width: '400px', marginBottom: '20px' }} onChange={(e) => handleDescriptionChange(e)} />
+                        <textarea rows='5' name={description} className='form-control' style={{ width: '400px', marginBottom: '20px' }} onChange={(e) => handleDescriptionChange(e)} required='true' />
                     </div>
 
-                    <button type='submit' style={{ marginTop: '20px' }} onClick={(e) => addNote(e)} className='btn btn-success'>Add Note</button>
+                    <button type='submit' style={{ marginTop: '20px' }} className='btn btn-success'>Add Note</button>
                 </form>
             </div>
         </div>

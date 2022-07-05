@@ -55,45 +55,53 @@ const UpdatePassword = () => {
     }
 
     const UpdatePassword = async (e) => {
-        setIsLoading(true);
+        
         e.preventDefault();
 
-        const dataSet = {
-            password: password,
-            status: '1',
+        if (password !== rePassword) {
+            alert("Passwords are not matching!")
         }
-
-        console.log("Sending Password and Status Data...", dataSet);
-        let data = await axios
-            .put(`http://localhost:8000/users/${id}`, {
+        else {
+            setIsLoading(true);
+            const dataSet = {
                 password: password,
                 status: '1',
-            })
-            .then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Password Updated!',
-                    text: 'Your password has been successfully updated...',
+            }
+
+            console.log("Sending Password and Status Data...", dataSet);
+            let data = await axios
+                .put(`http://localhost:8000/users/${id}`, {
+                    password: password,
+                    status: '1',
                 })
-                //alert('Update Success...');
-                if (accType === "Student") {
-                    navigate(`/allnotes`);
-                    setIsLoading(false);
-                }
-                else {
-                    navigate('/allusers');
-                    setIsLoading(false);
-                }
-            }). catch((err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: ' Update Failed!',
-                    text: 'Error While Updating...',
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password Updated!',
+                        text: 'Your password has been successfully updated...',
+                    })
+                    //alert('Update Success...');
+                    if (accType === "Student") {
+                        navigate(`/allnotes`);
+                        setIsLoading(false);
+                    }
+                    else {
+                        navigate('/allusers');
+                        setIsLoading(false);
+                    }
+                }).catch((err) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: ' Update Failed!',
+                        text: 'Error While Updating...',
+                    })
+                    console.log(err);
                 })
-                console.log(err);
-            })
             console.log("Updated Data: ", data);
-        
+        }
+
+
+
     }
 
     const renderUser = (
