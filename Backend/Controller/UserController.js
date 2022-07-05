@@ -1,5 +1,6 @@
 const User = require('../Model/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 var jwtSecret = 'mysecrettoken';
 
@@ -60,7 +61,7 @@ const loginUser = async (req, res) => {
 
         jwt.sign(payload, jwtSecret, { expiresIn: 2 }, (err, token) => {
             if (err) throw err;
-            res.json({ token, accountType: user.accountType, email: user.email, status: user.status, id:user.id, password:user.password });
+            res.json({ token, accountType: user.accountType, email: user.email, status: user.status, id: user.id, password: user.password });
         });
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -69,10 +70,20 @@ const loginUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
 
+    const PAGE_SIZE = 2;
+    const page = parseInt(req.query.page || "0");
+    const total = await User.countDocuments({});
+
     try {
 
-        const users = await User.find();
-        res.status(200).json(users);
+        const users = await User.find()
+            .limit(PAGE_SIZE)
+            .skip(PAGE_SIZE * page);
+        res.json({
+            totalPages: Math.ceil(total / PAGE_SIZE),
+            users,
+        });
+        res.status(200);
     }
     catch (err) {
 
@@ -98,11 +109,18 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
 
     const { id } = req.params;
-    const { userId, firstName, lastName, email, dateOfBirth, mobile, status, password, accountType } = req.body;
+    const { status, password } = req.body;
+
+    //Encrypt user password
+    encryptedPassword = await bcrypt.hash(password, 10);
 
     try {
 
-        const updatedUser = ({ userId, firstName, lastName, email, dateOfBirth, mobile, status, password, accountType, _id: id });
+        const updatedUser = ({
+            status,
+            password: encryptedPassword,
+            _id: id
+        });
         await User.findByIdAndUpdate(id, updatedUser, { new: true });
         res.json(updatedUser);
     }

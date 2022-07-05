@@ -8,7 +8,7 @@ const userLogin = async (req, res) => {
     try {
         // Get user input
         const { email, password } = req.body;
-
+        
         // Validate user input
         if (!(email && password)) {
             res.status(400).send("All input is required");
@@ -16,7 +16,9 @@ const userLogin = async (req, res) => {
         // Validate if user exist in our database
         const user = await User.findOne({ email });
 
-        if (user && (await bcrypt.compare(toString(password), user.password))) {
+        
+
+        if (user && (await bcrypt.compare(req.body.password, user.password))) {
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, email },
@@ -32,7 +34,10 @@ const userLogin = async (req, res) => {
             // user
             res.status(200).json({token, user});
         }
-        res.status(400).send("Invalid Credentials");
+        else if(!user){
+            res.status(400).send("Invalid Email");
+        }
+        res.status(400).send("Invalid password");
     } catch (err) {
         console.log(err);
     }
