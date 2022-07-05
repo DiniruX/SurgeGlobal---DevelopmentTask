@@ -18,18 +18,18 @@ mongoose.connect(DB_URL, {
     })
 
 const admins = [
-    // new User({
-    //     userId: "00023345",
-    //     firstName: "John",
-    //     lastName: "Samuel",
-    //     email: "Jsam@mail.com",
-    //     dateOfBirth: "09/12/1995",
-    //     mobile: "0787656543",
-    //     status: "false",
-    //     password: "$2a$10$rUVkxmAyuQ7gbH6.ffWNJ.m5ofLGHDCGD4n64m8aoRyBtJAh/EkZm",
-    //     accountType: "Admin",
+    new User({
+        userId: "00023345",
+        firstName: "John",
+        lastName: "Samuel",
+        email: "Jsam@mail.com",
+        dateOfBirth: "09/12/1995",
+        mobile: "0787656543",
+        status: "false",
+        password: "$2a$10$rUVkxmAyuQ7gbH6.ffWNJ.m5ofLGHDCGD4n64m8aoRyBtJAh/EkZm",
+        accountType: "Admin",
 
-    // }),
+    }),
     new User({
         userId: "00092387",
         firstName: "Mike",
