@@ -1,6 +1,6 @@
 # SurgerGLobal---DevelopmentProject
 
-* In this application there are two user types, Admin and Student.* 
+*In this application there are two user types, Admin and Student.* 
 *From the registration form, it can create user. In this form, the userId and the password are auto generated. 
 The user account is creating with a temporary password and it will be auto generated. 
 The password will be sent to the user's email filled in the form before with the login link.
