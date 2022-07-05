@@ -91,9 +91,14 @@ const RegisterUser = () => {
     const addNewUser = async (e) => {
         e.preventDefault();
 
+        if (userId.length <= 0) {
+            alert("Please Enter any button to get an user ID...")
+        }
+        
         if (firstName.length <= 2) {
             alert("The name should at least be 3 letters in the first name...")
         }
+
         if (lastName.length <= 2) {
             alert("The name should at least be 3 letters in the last name...")
         }
@@ -101,18 +106,23 @@ const RegisterUser = () => {
         if (email.length <= 2) {
             alert("Email must contain @ and atleast 3 letter before for the prefix...")
         }
-    
+
         if ((mobile.length < 10) || (mobile.length > 10)) {
             alert("Enter a valid mobile number...")
         }
-    
+
+        if (password.length <= 0) {
+            alert("Please Enter any button to get an temporary password...")
+        }
+
         if (dateOfBirth.length <= "01/01/2019") {
             alert("You cannot enrol to the system...")
         }
-    
+
         if (accountType.length <= 2) {
             alert("Account type should be Student or Admin...")
         }
+
         else {
             setIsLoading(true);
             const userData = {
