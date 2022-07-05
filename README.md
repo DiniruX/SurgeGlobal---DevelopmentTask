@@ -1,4 +1,4 @@
-# SurgerGLobal---DevelopmentProject
+# SurgerGlobal---DevelopmentProject
 
 *In this application there are two user types, Admin and Student.* 
 *From the registration form, it can create user. In this form, the userId and the password are auto generated. 
