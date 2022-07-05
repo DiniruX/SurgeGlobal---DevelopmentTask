@@ -190,60 +190,63 @@ const RegisterUser = () => {
 
     return (
         <div>
-            <h1>Register your account here...</h1>
+            <div className='container' style={{ backgroundColor:'#00134d', marginTop:'20px', padding:'10px'}}>
+               <center><h1 style={{color:'white'}}>User Registration</h1> </center>
+            </div>
+            
             {isLoading ? <LoadingSpinner /> : renderUser}
-            <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
+            <div className='container' style={{ marginTop: '30px', backgroundColor:"#d9d9d9", padding:'10px 20% 10px 20%' }}>
                 <form ref={form}>
                     <div className='form-group'>
                         <label>ID <b>(Press Any Key...)</b></label><br />
-                        <input type='text' name='' onChange={() => handleIds()} value={userId} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='' onChange={() => handleIds()} value={userId} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>First Name</label><br />
-                        <input type='text' name='user_first_name' onChange={(e) => handleFnameChange(e)} value={firstName} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='user_first_name' onChange={(e) => handleFnameChange(e)} value={firstName} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Last Name</label><br />
-                        <input type='text' name='' onChange={(e) => handleLnameChange(e)} value={lastName} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='' onChange={(e) => handleLnameChange(e)} value={lastName} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Email</label><br />
-                        <input type='text' name='user_email' onChange={(e) => handleEmailChange(e)} value={email} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='user_email' onChange={(e) => handleEmailChange(e)} value={email} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Date of Birth</label><br />
-                        <input type='date' name='' onChange={(e) => handleDobChange(e)} value={dateOfBirth} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='date' name='' onChange={(e) => handleDobChange(e)} value={dateOfBirth} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Mobile No</label><br />
-                        <input type='text' name='' onChange={(e) => handleMobileChange(e)} value={mobile} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name='' onChange={(e) => handleMobileChange(e)} value={mobile} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Password <b>(Press Any Key...)</b></label>
-                        <input type='password' name='user_password' onChange={() => handlePws()} value={password} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='password' name='user_password' onChange={() => handlePws()} value={password} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         {/* <label>Status</label> */}
-                        <input type='hidden' name='' onChange={(e) => handleStatusChange(e)} value={status} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' readOnly='true' />
+                        <input type='hidden' name='' onChange={(e) => handleStatusChange(e)} value={status} className='form-control' style={{ marginBottom: '20px' }} required='true' readOnly='true' />
                     </div>
 
                     <div class="form-group">
                         <label>Account Type</label>
-                        <select class="form-control" name='' onChange={(e) => handleAccTypeChange(e)} value={accountType} style={{ width: '400px', marginBottom: '40px' }} required='true'>
+                        <select class="form-control" name='' onChange={(e) => handleAccTypeChange(e)} value={accountType} style={{ marginBottom: '20px' }} required='true'>
                             <option selected>Choose...</option>
                             <option>Student</option>
                             <option>Admin</option>
                         </select>
                     </div>
 
-                    <button type='submit' onClick={(e) => addNewUser(e)} className='btn btn-primary' disabled={isLoading}>Register</button>
+                    <button style={{ marginBottom: '10px' }} type='submit' onClick={(e) => addNewUser(e)} className='btn btn-primary' disabled={isLoading}>Register</button>
                 </form>
                 <div>
                     Already having an account? <a href='/'>Login here</a>

@@ -36,14 +36,16 @@ const AllNotes = () => {
 
     return (
         <div>
-            <h1>All Notes</h1>
+            <div className='container' style={{ backgroundColor:'#00802b', marginTop:'20px', padding:'10px'}}>
+               <center><h1 style={{color:'white'}}>All Notes</h1> </center>
+            </div>
             <div className='container' >
                 <section class="cards" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: '30px' }}>
                     {notesList.map((val, index) => (
-                        <article class="card" style={{ flex: '0 1 24%', marginBottom: '20px', backgroundColor:'#ffa64d' }}>
+                        <article class="card" style={{ flex: '0 1 24%', marginBottom: '20px', backgroundColor:'#d9d9d9' }}>
                             <h4>{val.title}</h4>
                             <p>{val.description}</p>
-                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <div style={{margin:'0px'}} class="btn-group" role="group" aria-label="Basic example">
                                 <a className='btn btn-primary' href={`/updatenote/${val?._id}`}>Update Note</a>
                                 <a className='btn btn-danger' onClick={(e) => deleteNote(val?._id)} >Delete Note</a>
                             </div>

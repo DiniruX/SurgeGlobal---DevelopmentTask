@@ -112,22 +112,24 @@ const UpdatePassword = () => {
 
     return (
         <div>
-            <h1>Update your password here...</h1>
+            <div className='container' style={{ backgroundColor:'#00134d', marginTop:'20px', padding:'10px'}}>
+               <center><h1 style={{color:'white'}}>Update Password</h1> </center>
+            </div>
             {isLoading ? <LoadingSpinner /> : renderUser}
-            <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
+            <div className='container' style={{ marginTop: '30px', backgroundColor: "#d9d9d9", padding:'10px 20% 10px 20%' }}>
                 <form>
                     <div className='form-group'>
                         <label>Password</label><br />
-                        <input type='password' name='' value={password} onChange={(e) => handlePwChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='password' name='' value={password} onChange={(e) => handlePwChange(e)} className='form-control' style={{ marginBottom: '20px' }} />
                     </div>
 
                     <div className='form-group'>
                         <label>Re-Enter Password</label><br />
-                        <input type='password' name='' value={rePassword} onChange={(e) => handleRePwChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='password' name='' value={rePassword} onChange={(e) => handleRePwChange(e)} className='form-control' style={{ marginBottom: '20px' }} />
                     </div>
 
                     <div className='form-group'>
-                        <input type='hidden' name='status' value={status} onChange={(e) => handleStatusChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} />
+                        <input type='hidden' name='status' value={status} onChange={(e) => handleStatusChange(e)} className='form-control' style={{ marginBottom: '20px' }} />
                     </div>
 
                     <button type='submit' onClick={(e) => UpdatePassword(e)} style={{ marginTop: '20px' }} className='btn btn-success' disabled={isLoading}>Update Password</button>

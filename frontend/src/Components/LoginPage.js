@@ -31,8 +31,6 @@ const LoginPage = () => {
             .post('http://localhost:8000/users/signin', formData)
         console.log("data", data?.data)
 
-
-
         if (formData.email) {
             if (formData.password) {
                 try {
@@ -95,26 +93,30 @@ const LoginPage = () => {
 
     return (
         <div>
-            <h1>Log into your account here...</h1>
+            <div className='container' style={{ backgroundColor: '#00134d', marginTop: '20px', padding: '10px' }}>
+                <center><h1 style={{ color: 'white' }}>User Login</h1> </center>
+            </div>
             {isLoading ? <LoadingSpinner /> : renderUser}
-            <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
+            <div className='container' style={{ marginTop: '30px', backgroundColor: "#d9d9d9", padding:'10px 20% 10px 20%' }}>
                 <form onSubmit={(e) => onSubmit(e)}>
                     <div className='form-group'>
                         <label>Email</label><br />
-                        <input type='email' name='email' value={email} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='email' name='email' value={email} onChange={(e) => onChange(e)} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Password</label><br />
-                        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='password' name='password' value={password} onChange={(e) => onChange(e)} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
-                    <button type='submit'  style={{ marginTop: '20px' }} className='btn btn-success' disabled={isLoading}>Login</button>
+                    <button type='submit' style={{ marginBottom: '10px' }} className='btn btn-success' disabled={isLoading}>Login</button>
                 </form>
+                <div>
+                    Don't you have an account? <a href='/register'>Register here</a>
+                </div>
+
             </div>
-            <div style={{ marginTop: '30px', marginLeft: '35%' }}>
-                Don't you have an account? <a href='/register'>Register here</a>
-            </div>
+
         </div>
     )
 }

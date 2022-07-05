@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router";
+import Swal from 'sweetalert2';
 
 const UpdateNote = () => {
 
@@ -59,15 +60,15 @@ const UpdateNote = () => {
             if (data.status !== 200) {
                 Swal.fire({
                     icon: 'error',
-                    title: ' Inserte Failed!',
-                    text: 'Error While Inserting...',
+                    title: ' Update Failed!',
+                    text: 'Error While Updating...',
                 })
             }
             else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Note Inserted!',
-                    text: 'Your note has been successfully inserted into the system...',
+                    title: 'Note Update!',
+                    text: '',
                 })
                 navigate('/allnotes');
         }
@@ -80,17 +81,19 @@ const UpdateNote = () => {
 
     return (
         <div>
-            <h1>Update Notes here...</h1>
-            <div className='container' style={{ marginTop: '30px', marginLeft: '760px' }}>
+            <div className='container' style={{ backgroundColor:'#00802b', marginTop:'20px', padding:'10px'}}>
+               <center><h1 style={{color:'white'}}>Update Note</h1> </center>
+            </div>
+            <div className='container' style={{ marginTop: '30px', backgroundColor: "#d9d9d9", padding:'10px 20% 10px 20%' }}>
                 <form onSubmit={(e) => UpdateNote(e)}>
                     <div className='form-group'>
                         <label>Title</label><br />
-                        <input type='text' name="title" value={title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <input type='text' name="title" value={title} onChange={(e) => handleTitleChange(e)} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <div className='form-group'>
                         <label>Description</label><br />
-                        <textarea rows='5' name="description" value={description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
+                        <textarea rows='5' name="description" value={description} onChange={(e) => handleDescriptionChange(e)} className='form-control' style={{ marginBottom: '20px' }} required='true' />
                     </div>
 
                     <button type='submit' style={{ marginTop: '20px' }} className='btn btn-success'>Update Note</button>

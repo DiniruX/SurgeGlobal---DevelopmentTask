@@ -6,7 +6,7 @@ import 'reactjs-popup/dist/index.css';
 const AllUsers = () => {
 
     const [userList, setUserList] = useState([]);
-    //const [searchTerm, setSearchTerm] = useState();
+    const [searchTerm, setSearchTerm] = useState();
     const [pageNumber, setPageNumber] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
 
@@ -17,9 +17,11 @@ const AllUsers = () => {
             //.then((response) => response.json())
 
             .then((res) => {
+                console.log(res.data)
                 setUserList(res.data.users);
                 setNumberOfPages(res.data.totalPages);
             });
+
     }, [pageNumber]);
 
     const gotoPrevious = () => {
@@ -32,12 +34,14 @@ const AllUsers = () => {
 
     return (
         <div>
-            <h1>All Users</h1>
+            <div className='container' style={{ backgroundColor: '#00134d', marginTop: '20px', padding: '10px', marginBottom: '30px' }}>
+                <center><h1 style={{ color: 'white' }}>All Users</h1> </center>
+            </div>
 
-            {/* <center><div className='card' style={{ width: '550px', backgroundColor: '#cccccc' }}>
+            <center><div className='container' style={{ width: '550px', backgroundColor: '#d9d9d9' }}>
                 <div className='card-header'>Search User Here...</div>
-                <div className="col-lg-3 mt-2 mb-2">
-                    <input style={{ width: '200px', marginLeft: '30px', marginTop: '15px' }}
+                <div className="">
+                    <input style={{ width: '400px', marginTop: '15px' }}
                         className="form-control"
                         type="search"
                         placeholder="Search"
@@ -72,22 +76,28 @@ const AllUsers = () => {
                                 <td>{val.email}</td>
                                 <td>{val.accountType}</td>
                                 <td>
-                                    <Popup
+                                <Popup
                                         trigger={<button className="btn btn-info btn-sm"> View Details </button>}
                                         modal
                                         nested>
-                                        <div className="model"><center>
-                                            <div className="header" style={{ marginBottom: '10px' }}> <b>User Details</b> </div>
-                                            <div className="content">
-                                                ID: <br />
-                                                First Name: <br />
-                                                Last Name: <br />
-                                                Email: <br />
-                                                Date of Birth: <br />
-                                                mobile No: <br />
-                                                Status: <br />
-                                                Account Type: <br />
-                                            </div></center>
+                                        <div className="model" style={{backgroundColor: "#d9d9d9", padding:'0 10% 0 10%'}}>
+                                            <div className="header" style={{ marginBottom: '10px', paddingTop:'10px' }}> <h3>User Details</h3> </div>
+                                            <div className="content" style={{}}>
+                                                <label>ID:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.userId} disabled/><br />
+                                                <label>First Name:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.firstName} disabled/><br />
+                                                <label>Last Name:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.lastName} disabled/><br />
+                                                <label>Email:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.email} disabled/><br />
+                                                <label>Date of Birth:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.dateOfBirth} disabled/><br />
+                                                <label>mobile No:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.mobile} disabled/><br />
+                                                <label>Account Type:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.accountType} disabled/><br />
+                                            </div>
                                         </div>
                                     </Popup>
                                 </td>
@@ -95,7 +105,7 @@ const AllUsers = () => {
                         ))}
                     </tbody>
                 </table>
-            </div></center> */}
+            </div></center>
 
 
             <div className='container' style={{ marginTop: '30px' }}>
@@ -123,18 +133,24 @@ const AllUsers = () => {
                                         trigger={<button className="btn btn-info btn-sm"> View Details </button>}
                                         modal
                                         nested>
-                                        <div className="model"><center>
-                                            <div className="header" style={{ marginBottom: '10px' }}> <b>User Details</b> </div>
-                                            <div className="content">
-                                                ID: <br />
-                                                First Name: <br />
-                                                Last Name: <br />
-                                                Email: <br />
-                                                Date of Birth: <br />
-                                                mobile No: <br />
-                                                Status: <br />
-                                                Account Type: <br />
-                                            </div></center>
+                                        <div className="model" style={{backgroundColor: "#d9d9d9", padding:'0 10% 0 10%'}}>
+                                            <div className="header" style={{ marginBottom: '10px', paddingTop:'10px' }}> <h3>User Details</h3> </div>
+                                            <div className="content" style={{}}>
+                                                <label>ID:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.userId} disabled/><br />
+                                                <label>First Name:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.firstName} disabled/><br />
+                                                <label>Last Name:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.lastName} disabled/><br />
+                                                <label>Email:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.email} disabled/><br />
+                                                <label>Date of Birth:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.dateOfBirth} disabled/><br />
+                                                <label>mobile No:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.mobile} disabled/><br />
+                                                <label>Account Type:</label><br />
+                                                <input className='form-control' style={{ marginBottom: '10px' }} value={val.accountType} disabled/><br />
+                                            </div>
                                         </div>
                                     </Popup>
                                 </td>
