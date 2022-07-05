@@ -42,7 +42,7 @@ const InsertNote = () => {
         if (data.status !== 200) {
             Swal.fire({
                 icon: 'error',
-                title: ' Inserte Failed!',
+                title: ' Insert Failed!',
                 text: 'Error While Inserting...',
             })
         }

@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner'
+import Swal from 'sweetalert2';
+
 
 const UpdatePassword = () => {
 
@@ -12,6 +14,7 @@ const UpdatePassword = () => {
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
     const [status, setStatus] = useState("");
+    const [accType, setAccType] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -24,8 +27,10 @@ const UpdatePassword = () => {
                     setPassword(res.data.password);
                     setRePassword(res.data.password);
                     setStatus(res.data.status)
+                    setAccType(res.data.accoutType)
                     console.log("Current Password: ", res.data.password);
                     console.log("Current Status: ", res.data.status);
+                    console.log("Current Account Type: ", res.data.accountType);
                 })
         }
         getPassword();
@@ -65,11 +70,30 @@ const UpdatePassword = () => {
                 status: '1',
             })
             .then(() => {
-                alert('Update Success...');
-                setIsLoading(false);
-                navigate('/allusers');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Password Updated!',
+                    text: 'Your password has been successfully updated...',
+                })
+                //alert('Update Success...');
+                if (accType === "Student") {
+                    navigate(`/allnotes`);
+                    setIsLoading(false);
+                }
+                else {
+                    navigate('/allusers');
+                    setIsLoading(false);
+                }
+            }). catch((err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: ' Update Failed!',
+                    text: 'Error While Updating...',
+                })
+                console.log(err);
             })
-        console.log("Updated Data: ", data);
+            console.log("Updated Data: ", data);
+        
     }
 
     const renderUser = (

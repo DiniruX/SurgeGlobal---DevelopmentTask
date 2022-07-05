@@ -6,21 +6,35 @@ import 'reactjs-popup/dist/index.css';
 const AllUsers = () => {
 
     const [userList, setUserList] = useState([]);
-    const [searchTerm, setSearchTerm] = useState();
+    //const [searchTerm, setSearchTerm] = useState();
+    const [pageNumber, setPageNumber] = useState(0);
+    const [numberOfPages, setNumberOfPages] = useState(0);
+
+    const pages = new Array(numberOfPages).fill(null).map((v, i) => i);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/users')
+        axios.get(`http://localhost:8000/users?page=${pageNumber}`)
+            //.then((response) => response.json())
+
             .then((res) => {
-                console.log(res.data);
-                setUserList(res.data);
-            })
-    }, [])
+                setUserList(res.data.users);
+                setNumberOfPages(res.data.totalPages);
+            });
+    }, [pageNumber]);
+
+    const gotoPrevious = () => {
+        setPageNumber(Math.max(0, pageNumber - 1));
+    };
+
+    const gotoNext = () => {
+        setPageNumber(Math.min(numberOfPages - 1, pageNumber + 1));
+    };
 
     return (
         <div>
             <h1>All Users</h1>
 
-            <center><div className='card' style={{ width: '550px', backgroundColor: '#cccccc' }}>
+            {/* <center><div className='card' style={{ width: '550px', backgroundColor: '#cccccc' }}>
                 <div className='card-header'>Search User Here...</div>
                 <div className="col-lg-3 mt-2 mb-2">
                     <input style={{ width: '200px', marginLeft: '30px', marginTop: '15px' }}
@@ -81,7 +95,7 @@ const AllUsers = () => {
                         ))}
                     </tbody>
                 </table>
-            </div></center>
+            </div></center> */}
 
 
             <div className='container' style={{ marginTop: '30px' }}>
@@ -129,6 +143,22 @@ const AllUsers = () => {
                     </tbody>
                 </table>
             </div>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" onClick={gotoPrevious} tabindex="-1">Previous</a>
+                    </li>
+                    {pages.map((pageIndex) => (
+                        <li class="page-item">
+                            <a class="page-link" key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex + 1}</a>
+                        </li>
+                    ))}
+                    <li class="page-item">
+                        <a class="page-link" onClick={gotoNext}>Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     )
 }

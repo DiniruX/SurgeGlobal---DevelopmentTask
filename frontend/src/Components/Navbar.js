@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate, Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
 
@@ -7,15 +8,27 @@ const Navbar = () => {
 
     let accountType = localStorage.getItem('AccountType');
 
-    const handleSubmit = () => {
+    const handleLogOut = () => {
         localStorage.removeItem("Token");
         localStorage.removeItem("AccountType");
         localStorage.removeItem("Email");
         localStorage.removeItem("Status");
         localStorage.removeItem("Id");
-        alert('Logged Out...');
+        // alert('Logged Out...');
+        Swal.fire({
+            icon: 'success',
+            title: 'Logged Out!'
+        })
         navigate("/");
     }
+
+    const handleLogin = () => {
+        navigate("/");
+    }
+    const handleReg = () => {
+        navigate("/register");
+    }
+
     return (
         <div>
             <div>
@@ -34,8 +47,16 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleSubmit} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: accountType ? "flex" : "none" }}>
+                    <button onClick={handleLogOut} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: accountType == "Student" || accountType == "Admin" ? "flex" : "none" }}>
                         {"Logout"}
+                    </button>
+
+                    <button onClick={handleLogin} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: !(accountType) ? "flex" : "none" }}>
+                        {"Login"}
+                    </button>
+
+                    <button onClick={handleReg} className="btn btn-primary" type="submit" style={{ float: "right", marginRight: "10px", display: !(accountType) ? "flex" : "none" }}>
+                        {"Register"}
                     </button>
 
                 </nav>

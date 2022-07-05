@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner'
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 
 const RegisterUser = () => {
 
@@ -78,7 +79,7 @@ const RegisterUser = () => {
     }
 
     const handlePws = () => {
-        setPassword(rand(999999, 99999999))
+        setPassword("PW" + rand(999999, 99999999))
     }
 
     const handleStatusChange = (e) => {
@@ -113,17 +114,27 @@ const RegisterUser = () => {
             dateOfBirth: dateOfBirth,
             mobile: mobile,
             accountType: accountType,
-            password:toString(password),
+            password:password,
             status:'0'
         })
         .then((res) => {
             console.log("Saved User: ", res.data);
-            alert('Registration Success...');
+            //alert('Registration Success...');
+            Swal.fire({
+                icon: 'success',
+                title: 'User Registered!',
+                text: 'Your data has been successfully inserted. please check your email...',
+            })
             setIsLoading(false);
             sendEmail(e);
             navigate('/');
         })
         .catch((err) => {
+            Swal.fire({
+                icon: 'error',
+                title: ' Insert Failed!',
+                text: 'Error While Registering...',
+            })
             setIsLoading(false);
             console.log(err);
         })
@@ -135,7 +146,7 @@ const RegisterUser = () => {
         emailjs.sendForm('service_y4h1h0d', 'template_e6tenye', form.current, 'user_4Ty61vRi47OewtmEVjcGx')
           .then((result) => {
               console.log(result.text);
-              alert("Email Has Been Sent...")
+              //alert("Email Has Been Sent...")
           }, (error) => {
               console.log(error.text);
           });
@@ -154,9 +165,8 @@ const RegisterUser = () => {
             {isLoading ? <LoadingSpinner /> : renderUser}
             <div className='' style={{ marginTop: '30px', marginLeft: '35%' }}>
                 <form ref={form}>
-
                     <div className='form-group'>
-                        <label>ID</label><br />
+                        <label>ID <b>(Press Any Key...)</b></label><br />
                         <input type='text' name='' onChange={() => handleIds()} value={userId} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
@@ -186,7 +196,7 @@ const RegisterUser = () => {
                     </div>
 
                     <div className='form-group'>
-                    <label>Password</label>
+                    <label>Password <b>(Press Any Key...)</b></label>
                         <input type='password' name='user_password' onChange={() => handlePws()} value={password} className='form-control' style={{ width: '400px', marginBottom: '20px' }} required='true' />
                     </div>
 
@@ -197,21 +207,14 @@ const RegisterUser = () => {
 
                     <div class="form-group">
                         <label>Account Type</label>
-                        <select class="form-control" name='' onChange={(e) => handleAccTypeChange(e)} value={accountType} style={{ width: '400px', marginBottom: '80px' }} required='true'>
+                        <select class="form-control" name='' onChange={(e) => handleAccTypeChange(e)} value={accountType} style={{ width: '400px', marginBottom: '40px' }} required='true'>
                             <option selected>Choose...</option>
                             <option>Student</option>
                             <option>Admin</option>
                         </select>
                     </div>
 
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" required='true' />
-                        <label class="form-check-label" for="defaultCheck1">
-                            I hereby confirm the details are correct
-                        </label>
-                    </div>
-
-                    <button type='submit' onClick={(e) => addNewUser(e)} style={{ marginTop: '20px' }} className='btn btn-primary' disabled={isLoading}>Register</button>
+                    <button type='submit' onClick={(e) => addNewUser(e)} className='btn btn-primary' disabled={isLoading}>Register</button>
                 </form>
                 <div>
                     Already having an account? <a href='/'>Login here</a>

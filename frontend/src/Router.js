@@ -10,6 +10,8 @@ import InsertNote from "./Components/InsertNote";
 import UpdateNote from "./Components/UpdateNote";
 import Navbar from "./Components/Navbar";
 
+let isAccType = localStorage.getItem('AccountType');
+
 export default function Router() {
     return (
         <div>
@@ -18,11 +20,11 @@ export default function Router() {
                 <Routes>
                     <Route exact path="/" element={<LoginPage />} />
                     <Route exact path="/register" element={<RegisterUser />} />
-                    <Route exact path="/allusers" element={<AllUsers />} />
-                    <Route exact path="/allnotes" element={<AllNotes />} />
-                    <Route exact path="/updatepword/:id" element={<UpdatePassword />} />
-                    <Route exact path="/addnote" element={<InsertNote />} />
-                    <Route exact path="/updatenote/:id" element={<UpdateNote />} />
+                    <Route exact path="/allusers" element={isAccType === "Admin" ? <AllUsers /> : <AllNotes />} />
+                    <Route exact path="/allnotes" element={isAccType === "Student" ? <AllNotes /> : <AllUsers />} />
+                    <Route exact path="/updatepword/:id" element={ <UpdatePassword /> } />
+                    <Route exact path="/addnote" element={isAccType === "Student" ? <InsertNote /> : <AllUsers />} />
+                    <Route exact path="/updatenote/:id" element={isAccType === "Student" ? <UpdateNote /> : <AllUsers />} />
                 </Routes>
             </Routers>
         </div>
