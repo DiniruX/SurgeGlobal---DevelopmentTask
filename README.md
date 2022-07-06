@@ -49,5 +49,6 @@ to start the frontend of the application
 ```
 npm start
 ```
+***Please refresh the page in the initial login because it soemtimes redirect to the oppsite page because of the routes are protected***
 
 The frontend of the application will be started running on http://localhost:1234
